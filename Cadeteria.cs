@@ -14,4 +14,8 @@ public class Cadeteria{
         Telefono = telefono;
         ListadoCadetes = new List<Cadete>();
     }
+
+    public void AgregarCadete(Cadete cadete){
+        ListadoCadetes.Add(cadete);
+    }
 }

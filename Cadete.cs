@@ -20,4 +20,17 @@ public class Cadete{
         Telefono = telefono;
         ListadoPedidos = new List<Pedido>();
     }
+
+    public float JornalACobrar(){
+        float jornal = 0;
+        ListadoPedidos.ForEach(delegate(Pedido p)
+        {
+            if(p.Estado == "ENTREGADO")jornal+=500;
+        });
+        return jornal;
+    }
+
+    public void AgregarPedido(Pedido pedido){
+        ListadoPedidos.Add(pedido);
+    }
 }

@@ -17,4 +17,14 @@ public class Pedido{
     public string Observacion { get => observacion; set => observacion = value; }
     public Cliente Client { get => client; set => client = value; }
     public string Estado { get => estado; set => estado = value; }
+
+    public void VerDireccionCliente(){
+        Console.WriteLine("Direccion: {0}", this.Client.Direccion);
+        Console.WriteLine("Referencias: {0}", this.Client.Referencia);
+    }
+
+    public void VerDatosCliente(){
+        Console.WriteLine("Nombre: {0}", Client.Nombre);
+        Console.WriteLine("Telefono: {0}", Client.Telefono);
+    }
 }

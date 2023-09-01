@@ -18,4 +18,25 @@ public class Cadeteria{
     public void AgregarCadete(Cadete cadete){
         ListadoCadetes.Add(cadete);
     }
+
+    
+    public void AsignarPedido(int id, int numero, string observacion, Estados estado, string nombre, string direccion, int telefono, string referencia){
+        Pedido nuevoPedido = new Pedido(numero,observacion,estado, nombre, direccion, telefono, referencia);
+        Cadete cadet = ListadoCadetes.Find(cad => cad.Id == id);
+        cadet.AgregarPedido(nuevoPedido);
+    }
+
+    public void ReasignarPedido(Pedido pedido, int id){
+        foreach (var item in ListadoCadetes)
+        {
+            if((item.ListadoPedidos.Find(p => p.Numero == pedido.Numero )!= null)){
+                item.ListadoPedidos.Remove(pedido);
+                break;
+            }
+        }
+        Cadete cadet = ListadoCadetes.Find(cad => cad.Id == id);
+        cadet.AgregarPedido(pedido);
+    }
+
+    
 }

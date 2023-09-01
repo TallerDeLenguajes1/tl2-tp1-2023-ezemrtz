@@ -25,7 +25,7 @@ public class Cadete{
         float jornal = 0;
         ListadoPedidos.ForEach(delegate(Pedido p)
         {
-            if(p.Estado == "ENTREGADO")jornal+=500;
+            if(p.Estado == Estados.entregado)jornal+=500;
         });
         return jornal;
     }

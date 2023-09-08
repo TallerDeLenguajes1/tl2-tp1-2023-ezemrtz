@@ -10,6 +10,7 @@ public class Pedido{
     private int numero;
     private string observacion;
     private Cliente client;
+    private int idCadete;
     private Estados estado;
 
     public Pedido(int numero, string observacion, Estados estado, string nombre, string direccion, int telefono, string referencia){
@@ -23,6 +24,7 @@ public class Pedido{
     public string Observacion { get => observacion; set => observacion = value; }
     public Cliente Client { get => client; set => client = value; }
     public Estados Estado { get => estado; set => estado = value; }
+    public int IdCadete { get => idCadete; set => idCadete = value; }
 
     public void VerDireccionCliente(){
         Console.WriteLine("Direccion: {0}", this.Client.Direccion);

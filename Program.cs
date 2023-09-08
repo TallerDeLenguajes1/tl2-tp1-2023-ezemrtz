@@ -4,17 +4,17 @@ AccesoADatos HelperDatos = new AccesoADatos();
 string? pathCadetes = "datos/cadetes.csv", pathCadeteria = "datos/cadeteria.csv";
 Cadeteria? Cad = null;
 if(HelperDatos.ExisteArchivo(pathCadeteria) && HelperDatos.ExisteArchivo(pathCadetes)){
-    Cad = HelperDatos.cargarCadeteria(pathCadeteria);
-    HelperDatos.cargarCadetes(pathCadetes, Cad);
+    Cad = HelperDatos.leerCadeteria(pathCadeteria);
+    Cad.CargaInicialCadetes(HelperDatos.leerCadetes(pathCadetes));
 }
 
-int op, numPedido = 0;
+int op;
 Pedido nuevoPedido = null, ultimoPedidoAsig = null;
 do{
     Console.WriteLine("========== MENU CADETERIA ==========");
     Console.WriteLine("Ingrese que quiere realizar:");
     Console.WriteLine("1- Dar de alta pedido");
-    Console.WriteLine("2- Asignar pedido a cadete");
+    Console.WriteLine("2- Asignar cadete a pedido");
     Console.WriteLine("3- Cambiar estado de pedido");
     Console.WriteLine("4- Reasignar pedido a otro cadete");
     Console.WriteLine("0- SALIR");
@@ -22,16 +22,10 @@ do{
 
     switch(op){
         case 1:
-            nuevoPedido = Cad.DarAltaPedido(numPedido);
-            numPedido++;
+            Cad.DarAltaPedido();
         break;
         case 2:
-            if(nuevoPedido != null && nuevoPedido != ultimoPedidoAsig){
-                ultimoPedidoAsig = nuevoPedido;
-                Cad.AsignarPedido(nuevoPedido);
-            }else{
-                Console.WriteLine("El pedido ya se encuentra asignado");
-            }
+            
         break;
         case 3:
             int numPed, op1;
@@ -60,3 +54,4 @@ do{
     }
 }while(op != 0);
 Cad.Informe();
+

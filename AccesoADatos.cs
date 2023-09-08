@@ -7,7 +7,7 @@ public class AccesoADatos{
             return false;
         }
     }
-    public Cadeteria cargarCadeteria(string path){
+    public Cadeteria leerCadeteria(string path){
         var archivo = new StreamReader(path);
         string texto = archivo.ReadLine();
         string[] textoSeparado;
@@ -20,16 +20,18 @@ public class AccesoADatos{
         archivo.Close();
         return cadeteria;
     }
-    public void cargarCadetes(string path, Cadeteria cad){
+    public List<Cadete> leerCadetes(string path){
+        List<Cadete> lisCad = new List<Cadete>();
         var archivo = new StreamReader(path);
         string texto = archivo.ReadLine();
         string[] textoSeparado;
         while(texto != null){
             textoSeparado = texto.Split(";");
             Cadete cadete = new Cadete(Convert.ToInt32(textoSeparado[0]),textoSeparado[1],textoSeparado[2],Convert.ToInt32(textoSeparado[3]));
-            cad.AgregarCadete(cadete);
+            lisCad.Add(cadete);
             texto = archivo.ReadLine();
         }
         archivo.Close();
+        return lisCad;
     }
 }

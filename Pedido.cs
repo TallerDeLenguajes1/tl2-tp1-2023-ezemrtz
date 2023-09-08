@@ -11,7 +11,6 @@ public class Pedido{
     private string observacion;
     private Cliente client;
     private Estados estado;
-    private Cadete icadete;
 
     public Pedido(int numero, string observacion, Estados estado, string nombre, string direccion, int telefono, string referencia){
         Client = new Cliente(nombre, direccion, telefono, referencia);
@@ -24,7 +23,6 @@ public class Pedido{
     public string Observacion { get => observacion; set => observacion = value; }
     public Cliente Client { get => client; set => client = value; }
     public Estados Estado { get => estado; set => estado = value; }
-    public Cadete Icadete { get => icadete; set => icadete = value; }
 
     public void VerDireccionCliente(){
         Console.WriteLine("Direccion: {0}", this.Client.Direccion);
@@ -39,6 +37,18 @@ public class Pedido{
     public void CambiarEstado(Estados estado){
         if(this.estado == Estados.pendiente){
             this.estado = estado;
+        }else{
+            Console.WriteLine("No es valido el cambio de estado");
         }
+    }
+
+    public void MostrarInfo(){
+        Console.WriteLine("==================");
+        Console.WriteLine("Numero pedido: {0}", numero);
+        Console.WriteLine("Observacion: {0}", observacion);
+        Console.WriteLine("Estado: {0}", estado);
+        Console.WriteLine("------ Cliente ------");
+        VerDatosCliente();
+        Console.WriteLine("==================");
     }
 }

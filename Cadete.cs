@@ -22,15 +22,58 @@ public class Cadete{
     }
 
     public float JornalACobrar(){
-        float jornal = 0;
-        ListadoPedidos.ForEach(delegate(Pedido p)
-        {
-            if(p.Estado == Estados.entregado)jornal+=500;
-        });
+        float jornal = 500;
+        jornal *= CantidadPedidosEnviados();
         return jornal;
     }
 
+    public int CantidadPedidos(){
+        int cant = 0;
+        foreach (var item in ListadoPedidos)
+        {
+            cant++;
+        }
+        return cant;
+    }
+
+    public int CantidadPedidosEnviados(){
+        int cant = 0;
+        foreach (var item in ListadoPedidos)
+        {
+            if(item.Estado == Estados.entregado){
+                cant++;
+            }
+        }
+        return cant;
+
+    }
     public void AgregarPedido(Pedido pedido){
         ListadoPedidos.Add(pedido);
+    }
+    public void BorrarPedido(Pedido pedido){
+        ListadoPedidos.Remove(pedido);
+    }
+
+    public void CambiarEstado(int numPedido, Estados estado){
+        foreach (var item in ListadoPedidos)
+        {
+            if(item.Numero == numPedido){
+                item.CambiarEstado(estado);
+                break;
+            }
+        }
+    }
+
+    public void MostrarInfo(){
+        Console.WriteLine("==================");
+        Console.WriteLine("ID: {0}", id);
+        Console.WriteLine("Nombre: {0}", nombre);
+        Console.WriteLine("Direccion: {0}", direccion);
+        Console.WriteLine("------ Pedidos ------");
+        foreach (var item in listadoPedidos)
+        {
+            item.MostrarInfo();
+        }
+        Console.WriteLine("==================");
     }
 }

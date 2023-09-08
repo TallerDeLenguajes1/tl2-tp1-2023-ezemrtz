@@ -8,7 +8,8 @@ if(HelperDatos.ExisteArchivo(pathCadeteria) && HelperDatos.ExisteArchivo(pathCad
     HelperDatos.cargarCadetes(pathCadetes, Cad);
 }
 
-int op;
+int op, numPedido = 0;
+Pedido nuevoPedido = null, ultimoPedidoAsig = null;
 do{
     Console.WriteLine("========== MENU CADETERIA ==========");
     Console.WriteLine("Ingrese que quiere realizar:");
@@ -19,8 +20,6 @@ do{
     Console.WriteLine("0- SALIR");
     op = Convert.ToInt32(Console.ReadLine());
 
-    Pedido nuevoPedido = null, ultimoPedidoAsig = null;
-    int numPedido = 0;
     switch(op){
         case 1:
             nuevoPedido = Cad.DarAltaPedido(numPedido);

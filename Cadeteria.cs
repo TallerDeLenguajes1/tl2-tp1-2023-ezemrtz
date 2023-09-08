@@ -91,10 +91,14 @@ public class Cadeteria{
         var cantPedidosTotal = infoCadetes.Sum(cad => cad.cantPedidos);
         var cantEnvios = infoCadetes.Sum(cad => cad.cantPedidosEntregados);
         float promedioPedidosEnviados;
+        int cantCadetes=0;
+        foreach(var cad in infoCadetes){
+            cantCadetes++;
+        }
         if(cantPedidosTotal == 0){
             promedioPedidosEnviados = 0;
         }else{
-            promedioPedidosEnviados = cantEnvios/cantPedidosTotal;
+            promedioPedidosEnviados = (float)cantEnvios/cantCadetes;
         }
 
         foreach (var cad in infoCadetes)

@@ -1,6 +1,11 @@
 ﻿using cadeteria;
-
-AccesoADatos HelperDatos = new AccesoADatos();
+AccesoADatos HelperDatos = null;
+Console.WriteLine("Ingrese con que opcion quiere cargar los datos: ");
+Console.WriteLine("1. CSV");
+Console.WriteLine("2. JSON");
+int opDatos = Convert.ToInt32(Console.ReadLine());
+if(opDatos == 1) HelperDatos = new AccesoCSV();
+if(opDatos == 2) HelperDatos = new AccesoJSON();
 string? pathCadetes = "datos/cadetes.csv", pathCadeteria = "datos/cadeteria.csv";
 Cadeteria? Cad = null;
 if(HelperDatos.ExisteArchivo(pathCadeteria) && HelperDatos.ExisteArchivo(pathCadetes)){
@@ -25,7 +30,13 @@ do{
             Cad.DarAltaPedido();
         break;
         case 2:
-            
+            {
+                Console.WriteLine("Ingrese el numero del pedido: ");
+                int num = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Ingrese el id del cadete: ");
+                int idC = Convert.ToInt32(Console.ReadLine());
+                Cad.AsignarCadeteAPedido(idC, num);
+            }
         break;
         case 3:
             int numPed, op1;

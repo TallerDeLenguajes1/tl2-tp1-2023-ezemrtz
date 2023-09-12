@@ -13,6 +13,7 @@ public class Cadeteria{
     public Cadeteria(string nombre, int telefono){
         Nombre = nombre;
         Telefono = telefono;
+        listadoPedidos = new List<Pedido>();
     }
 
     public void CargaInicialCadetes(List<Cadete> lista){
@@ -97,39 +98,39 @@ public int CantidadPedidos(){
 
     }
     public void Informe(){
-        var infoCadetes = listadoCadetes.Select(cad => new{
-            nombre = cad.Nombre,
-            cantPedidos = CantidadPedidos(),
-            cantPedidosEntregados = CantidadPedidosEnviados(),
-            //monto = cad.JornalACobrar()
-        }).ToList();
-       // var montoTotal = infoCadetes.Sum(cad => cad.monto);
-        var cantPedidosTotal = infoCadetes.Sum(cad => cad.cantPedidos);
-        var cantEnvios = infoCadetes.Sum(cad => cad.cantPedidosEntregados);
-        float promedioPedidosEnviados;
-        int cantCadetes=0;
-        foreach(var cad in infoCadetes){
-            cantCadetes++;
+        float montoTotal = 0;
+        int cantPedidosEnvTotal = 0;
+        foreach (var cad in listadoCadetes)
+        {   
+            float monto = 0;
+            int cantPedidos = 0;
+            int cantPedidosEnviados = 0;
+            Console.WriteLine("=============");
+            Console.WriteLine("ID: {0}", cad.Id);
+            Console.WriteLine("Nombre: {0}", cad.Nombre);
+            foreach (var ped in listadoPedidos)
+            {
+                if(ped.IdCadete == cad.Id){
+                    cantPedidos++;
+                    if(ped.Estado == Estados.entregado){
+                        cantPedidosEnviados++;
+                        cantPedidosEnvTotal++;
+                        monto += 500;
+                    }
+                }
+            }
+            Console.WriteLine("Cantidad pedidos: {0}", cantPedidos);
+            Console.WriteLine("Cantidad pedidos enviados: {0}", cantPedidosEnviados);
+            Console.WriteLine("Jornal: ${0}", monto);
+            Console.WriteLine("=============");
+            montoTotal += monto;
         }
-        if(cantPedidosTotal == 0){
-            promedioPedidosEnviados = 0;
-        }else{
-            promedioPedidosEnviados = (float)cantEnvios/cantCadetes;
+        Console.WriteLine("Monto total recaudado: ${0}", montoTotal);
+        float promedio = 0;
+        if(listadoCadetes.Count != 0){
+            promedio = (float)cantPedidosEnvTotal/listadoCadetes.Count;
         }
-
-        foreach (var cad in infoCadetes)
-        {
-            Console.WriteLine("---------------");
-            Console.WriteLine("Nombre: {0}", cad.nombre);
-            Console.WriteLine("Cantidad pedidos: {0}",cad.cantPedidos);
-            Console.WriteLine("Pedidos enviados: {0}", cad.cantPedidosEntregados);
-        }
-        Console.WriteLine("---------------");
-        //Console.WriteLine("\nTotal recaudado: {0}", montoTotal);
-        Console.WriteLine("Total pedidos: {0}", cantPedidosTotal);
-        Console.WriteLine("Total pedidos entregados: {0}", cantEnvios);
-        Console.WriteLine("Promedio pedidos entregados por cadete: {0}", promedioPedidosEnviados);
-        
+        Console.WriteLine("Promedio de envios por cadete: {0}", promedio);
     }
 
 

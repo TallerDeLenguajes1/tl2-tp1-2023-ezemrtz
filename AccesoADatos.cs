@@ -1,5 +1,7 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace cadeteria;
-public class AccesoADatos{
+public abstract class AccesoADatos{
     public bool ExisteArchivo(string path){
         if(File.Exists(path)){
             return true;
@@ -7,7 +9,12 @@ public class AccesoADatos{
             return false;
         }
     }
-    public Cadeteria leerCadeteria(string path){
+    public abstract Cadeteria leerCadeteria(string path);
+    public abstract List<Cadete> leerCadetes(string path);
+}
+
+public class AccesoCSV : AccesoADatos{
+    public override Cadeteria leerCadeteria(string path){
         var archivo = new StreamReader(path);
         string texto = archivo.ReadLine();
         string[] textoSeparado;
@@ -20,7 +27,7 @@ public class AccesoADatos{
         archivo.Close();
         return cadeteria;
     }
-    public List<Cadete> leerCadetes(string path){
+    public override List<Cadete> leerCadetes(string path){
         List<Cadete> lisCad = new List<Cadete>();
         var archivo = new StreamReader(path);
         string texto = archivo.ReadLine();
@@ -31,6 +38,27 @@ public class AccesoADatos{
             lisCad.Add(cadete);
             texto = archivo.ReadLine();
         }
+        archivo.Close();
+        return lisCad;
+    }
+}
+public class AccesoJSON : AccesoADatos{
+    public override Cadeteria leerCadeteria(string path){
+        var archivo = new StreamReader(path);
+        string texto = archivo.ReadLine();
+        Cadeteria cadeteria = null;
+        while(texto != null){
+            cadeteria = JsonSerializer.Deserialize<Cadeteria>(texto);
+            texto = archivo.ReadLine();
+        }
+        archivo.Close();
+        return cadeteria;
+    }
+    public override List<Cadete> leerCadetes(string path){
+        List<Cadete> lisCad = new List<Cadete>();
+        var archivo = new StreamReader(path);
+        string texto = archivo.ReadToEnd();
+        lisCad = JsonSerializer.Deserialize<List<Cadete>>(texto);
         archivo.Close();
         return lisCad;
     }

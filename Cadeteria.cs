@@ -8,6 +8,8 @@ public class Cadeteria{
 
     public string Nombre { get => nombre; set => nombre = value; }
     public int Telefono { get => telefono; set => telefono = value; }
+    public List<Cadete> ListadoCadetes { get => listadoCadetes; set => listadoCadetes = value;}
+    public List<Pedido> ListadoPedidos { get => listadoPedidos;}
     
 
     public Cadeteria(string nombre, int telefono){
@@ -16,31 +18,11 @@ public class Cadeteria{
         listadoPedidos = new List<Pedido>();
     }
 
-    public void CargaInicialCadetes(List<Cadete> lista){
-        listadoCadetes = lista;
-    }
-
-    public void AgregarCadete(Cadete cadete){
-        listadoCadetes.Add(cadete);
-    }
-
-    public void DarAltaPedido(){
-        Pedido miPedido;
-        Console.WriteLine("Ingrese el nombre del cliente: ");
-        var nombre = Console.ReadLine();
-        Console.WriteLine("Ingrese la direccion del cliente: ");
-        var direcc = Console.ReadLine();
-        Console.WriteLine("Ingrese una referencia de la direccion del cliente: ");
-        var referencia = Console.ReadLine();
-        Console.WriteLine("Ingrese el telefono del cliente: ");
-        var telefono = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("Ingrese una observacion del pedido: ");
-        var obs = Console.ReadLine();
-
-        miPedido = new Pedido(listadoPedidos.Count+1, obs, Estados.pendiente, nombre, direcc, telefono, referencia);
-
+    public void DarAltaPedido(string obs, string nomCliente, string direccion, int telefono, string referencia){
+        Pedido miPedido = new Pedido(listadoPedidos.Count+1, obs, Estados.pendiente, nomCliente, direccion, telefono, referencia);
         listadoPedidos.Add(miPedido);
     }
+    
     public void AsignarCadeteAPedido(int idCadete, int numPedido){
         Pedido pedido = listadoPedidos.Find(ped => ped.Numero == numPedido);
         if(pedido != null){
@@ -57,11 +39,13 @@ public class Cadeteria{
         
     }
 
-    public void CambiarEstadoPedido(int numPedido, Estados estado){
+    public void CambiarEstadoPedido(int numPedido, int estado){
         Pedido pedido;
+        Estados nuevoEstado = Estados.entregado;
+        if(estado == 2) nuevoEstado = Estados.cancelado;
         foreach (var item in listadoPedidos){
             if(item.Numero == numPedido){
-                item.CambiarEstado(estado);
+                item.CambiarEstado(nuevoEstado);
             }
         }
     }
